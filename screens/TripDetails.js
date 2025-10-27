@@ -1,75 +1,97 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 
 export default function TripDetails({ route }) {
   const { trip } = route.params;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Trip Details</Text>
-      <View style={styles.box}>
-        <Text style={styles.label}>Trip Number:</Text>
-        <Text style={styles.value}>{trip.tripNumber}</Text>
-
-        <Text style={styles.label}>Origin:</Text>
-        <Text style={styles.value}>{trip.origin}</Text>
-
-        <Text style={styles.label}>Destination:</Text>
-        <Text style={styles.value}>{trip.destination}</Text>
-
-        <Text style={styles.label}>Time:</Text>
-        <Text style={styles.value}>{trip.time}</Text>
-
-        <Text style={styles.label}>Mode:</Text>
-        <Text style={styles.value}>{trip.mode}</Text>
-
-        <Text style={styles.label}>Number of Travellers:</Text>
-        <Text style={styles.value}>{trip.travellers}</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Trip Details</Text>
+      
+      <View style={styles.card}>
+        <View style={styles.row}>
+          <Text style={styles.label}>Trip Number:</Text>
+          <Text style={styles.value}>{trip.tripNumber}</Text>
+        </View>
+        
+        <View style={styles.row}>
+          <Text style={styles.label}>Origin:</Text>
+          <Text style={styles.value}>{trip.origin}</Text>
+        </View>
+        
+        <View style={styles.row}>
+          <Text style={styles.label}>Destination:</Text>
+          <Text style={styles.value}>{trip.destination}</Text>
+        </View>
+        
+        <View style={styles.row}>
+          <Text style={styles.label}>Time:</Text>
+          <Text style={styles.value}>{trip.time}</Text>
+        </View>
+        
+        <View style={styles.row}>
+          <Text style={styles.label}>Mode:</Text>
+          <Text style={styles.value}>{trip.mode}</Text>
+        </View>
+        
+        <View style={styles.row}>
+          <Text style={styles.label}>Travelers:</Text>
+          <Text style={styles.value}>{trip.travellers}</Text>
+        </View>
+        
+        {trip.createdAt && (
+          <View style={styles.row}>
+            <Text style={styles.label}>Submitted:</Text>
+            <Text style={styles.value}>{new Date(trip.createdAt).toLocaleString()}</Text>
+          </View>
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
-const colors = {
-  primary: '#4CAF50',
-  background: '#E8F5E9',
-  textPrimary: '#333333',
-  boxBackground: '#FFFFFF',
-  labelColor: '#196619',
-};
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    padding: 20,
+  container: { 
+    flex: 1, 
+    backgroundColor: '#e8f5e9', 
+    padding: 20 
   },
-  header: {
-    fontSize: 24,
-    color: colors.primary,
-    fontWeight: 'bold',
+  title: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    color: '#2e7d32', 
     marginBottom: 20,
-    fontFamily: 'serif',
+    textAlign: 'center'
   },
-  box: {
-    backgroundColor: colors.boxBackground,
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
     padding: 20,
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 4,
     elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0'
   },
   label: {
-    color: colors.labelColor,
-    fontWeight: 'bold',
     fontSize: 16,
-    marginTop: 8,
+    fontWeight: '600',
+    color: '#4caf50',
+    flex: 1
   },
   value: {
-    color: colors.textPrimary,
     fontSize: 16,
-    marginBottom: 8,
-  },
+    color: '#333',
+    flex: 2,
+    textAlign: 'right'
+  }
 });

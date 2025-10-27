@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Alert } from 'react-native';
+import { ScrollView, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const tempTravellerCreds = {
@@ -14,65 +14,95 @@ export default function TravellerLogin({ navigation }) {
 
   const login = () => {
     if (username === tempTravellerCreds.username && password === tempTravellerCreds.password) {
-      navigation.navigate('Consent');
+      navigation.navigate('ConsentScreen');
     } else {
       Alert.alert('Invalid credentials', 'Please enter correct traveller username and password');
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.container}>
       <Text style={styles.title}>Traveller Login</Text>
+      
       <TextInput
         style={styles.input}
         placeholder="Username"
-        autoCapitalize="none"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
       />
+      
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
           placeholder="Password"
-          secureTextEntry={!showPassword}
           value={password}
           onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+          autoCapitalize="none"
         />
         <TouchableOpacity onPress={() => setShowPassword((prev) => !prev)}>
           <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={24} color="gray" />
         </TouchableOpacity>
       </View>
-      <Button title="Login" onPress={login} color="#4caf50" />
-    </View>
+      
+      <TouchableOpacity style={styles.button} onPress={login}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 30, backgroundColor: '#e8f5e9' },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#2e7d32', marginBottom: 20, textAlign: 'center' },
-  input: {
-    borderWidth: 1,
-    borderColor: '#4caf50',
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 15,
-    backgroundColor: '#f9f9f9',
-    color: '#333',
+  scrollContainer: { 
+    flex: 1, 
+    backgroundColor: '#e8f5e9' 
+  },
+  container: { 
+    flexGrow: 1, 
+    justifyContent: 'center', 
+    padding: 30 
+  },
+  title: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    color: '#2e7d32', 
+    marginBottom: 20, 
+    textAlign: 'center' 
+  },
+  input: { 
+    borderWidth: 1, 
+    borderColor: '#4caf50', 
+    padding: 10, 
+    marginBottom: 15, 
+    borderRadius: 5,
+    backgroundColor: '#fff'
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#4caf50',
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    borderRadius: 5,
+    backgroundColor: '#fff',
     marginBottom: 15,
-    backgroundColor: '#f9f9f9',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
   },
   passwordInput: {
     flex: 1,
     fontSize: 16,
     color: '#333',
+  },
+  button: { 
+    backgroundColor: '#4caf50', 
+    padding: 15, 
+    borderRadius: 5, 
+    alignItems: 'center' 
+  },
+  buttonText: { 
+    color: 'white', 
+    fontWeight: 'bold', 
+    fontSize: 16 
   },
 });
